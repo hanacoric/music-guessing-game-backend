@@ -1,42 +1,34 @@
-FROM php:8.3.14-apache
+FROM php:8.3-apache
 
-# Install system dependencies
+# Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
     git \
     zip \
     unzip \
     libzip-dev \
     libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+    && docker-php-ext-install zip pdo_pgsql
 
-# Install PHP extensions
-RUN docker-php-ext-install zip pdo_mysql pdo_pgsql
-
-# Enable Apache rewrite module
+# Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Copy application code to Apache root
+# Copy application code
 COPY . /var/www/html/
 
-# Change Apache document root to Laravel's public folder
-RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
-
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
+# Set working directory
 WORKDIR /var/www/html
 
-# Install dependencies, optimize autoloader, no dev packages
+# Copy composer from official image and install dependencies
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --optimize-autoloader --no-dev
 
-# Set permissions for storage and cache
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public
+# Fix permissions for storage and cache
+RUN chown -R www-data:www-data storage bootstrap/cache public
 
-# Clear config and cache to avoid stale config issues
-RUN php artisan config:clear && php artisan cache:clear && php artisan route:clear && php artisan view:clear
+# Fix Apache DocumentRoot to public folder
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
-# Run migrations (without --columns or extra options)
-RUN php artisan migrate --force
-
-# Expose HTTP port
 EXPOSE 80
+
+# Start Apache in the foreground
+CMD ["apache2-foreground"]
