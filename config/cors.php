@@ -5,7 +5,7 @@ return [
 
     'allowed_methods' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 
-    'allowed_origins' => ['https://music-guessing-game-frontend.vercel.app'],
+    'allowed_origins' => ['https://music-guessing-game-frontend.vercel.app', 'https://guess-the-song-qv83rttah-hanacorics-projects.vercel.app'],
 
     'allowed_origins_patterns' => [],
 
