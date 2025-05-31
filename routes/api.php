@@ -128,10 +128,22 @@ Route::post('/guess', function (Request $request) {
 
     $normalize = function ($value) {
         $value = strtolower($value);
-        $value = preg_replace('/\b(remastered|deluxe|version|edition|explicit|greatest hits|best of|essential|gold|collection|anthology|singles|expanded|original recording)\b/i', '', $value);
+
+        // Remove anything in parentheses or brackets (e.g., "(Remastered)", "[Deluxe Edition]")
+        $value = preg_replace('/[\(\[].*?[\)\]]/', '', $value);
+
+        // Remove common keywords even if they appear outside brackets
+        $value = preg_replace('/\b(remaster(ed)?( \d{4})?|deluxe|version|edition|explicit|greatest hits|best of|essential|gold|collection|anthology|singles|expanded|original recording)\b/i', '', $value);
+
+        // Remove special characters
         $value = preg_replace('/[^a-z0-9\s]/', '', $value);
+
+        // Collapse multiple spaces
+        $value = preg_replace('/\s+/', ' ', $value);
+
         return trim($value);
     };
+
 
     $normalizedGuesses = [
         'title' => $normalize($data['guessed_title'] ?? ''),
