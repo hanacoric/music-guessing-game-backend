@@ -6,7 +6,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://music-guessing-game-frontend.vercel.app/'],
+    'allowed_origins' => ['https://music-guessing-game-frontend.vercel.app'],
 
     'allowed_origins_patterns' => [],
 
