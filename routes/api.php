@@ -31,7 +31,7 @@ $artistLists = [
     3 => [ // Metal
         'Metallica', 'Iron Maiden', 'Black Sabbath', 'Slayer', 'Megadeth', 'Pantera', 'Judas Priest',
         'Ozzy Osbourne', 'System of a Down', 'Korn', 'Slipknot', 'Tool', 'Avenged Sevenfold',
-        'Linkin Park', 'Rammstein', 'Dio', 'Lamb of God', 'Disturbed', 'Sepultura', 'Mastodon',
+        'Linkin Park', 'Rammstein', 'Lamb of God', 'Disturbed', 'Sepultura', 'Mastodon',
         'Deftones', 'Anthrax', 'Dream Theater', 'Gojira', 'Amon Amarth', 'Opeth', 'Testament',
         'Bring Me the Horizon', 'Arch Enemy', 'Behemoth', 'Cannibal Corpse', 'Napalm Death',
         'Morbid Angel', 'Obituary'
