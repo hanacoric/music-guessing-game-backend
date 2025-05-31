@@ -24,7 +24,7 @@ class DeezerController extends Controller
             'Grunge' => [
                 'Nirvana', 'Pearl Jam', 'Soundgarden', 'Alice in Chains', 'Stone Temple Pilots', 'Mudhoney',
                 'Temple of the Dog', 'Screaming Trees', 'Mother Love Bone', 'Hole', 'Mad Season', 'Bush',
-                'Melvins', 'Silverchair', 'Meat Puppets',
+                'Melvins', 'Silverchair', 'Meat Puppets'
             ],
             'Metal' => [
                 'Metallica', 'Iron Maiden', 'Black Sabbath', 'Slayer', 'Megadeth', 'Pantera', 'Judas Priest',
@@ -114,7 +114,7 @@ class DeezerController extends Controller
 
         $randomArtist = collect($genreArtists[$genre])->random();
 
-        // Step 1: Search for the artist
+        //Search for the artist
         $artistSearch = Http::get("https://api.deezer.com/search/artist?q=" . urlencode($randomArtist));
         $artistData = $artistSearch->json()['data'][0] ?? null;
 
@@ -124,7 +124,7 @@ class DeezerController extends Controller
 
         $artistId = $artistData['id'];
 
-        // Step 2: Get top tracks
+        //get top tracks
         $topTracksResponse = Http::get("https://api.deezer.com/artist/{$artistId}/top?limit=10");
         $topTracks = $topTracksResponse->json()['data'] ?? [];
 
