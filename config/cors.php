@@ -1,10 +1,9 @@
 <?php
 
 return [
-
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
+    'allowed_methods' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 
     'allowed_origins' => ['https://music-guessing-game-frontend.vercel.app'],
 
@@ -17,5 +16,4 @@ return [
     'max_age' => 0,
 
     'supports_credentials' => false,
-
 ];
